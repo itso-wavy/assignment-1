@@ -1,10 +1,8 @@
 {
-  "admin": [
-    {
-      "id": "admin",
-      "password": "0000"
-    }
-  ],
+  "admin": {
+    "id": "admin",
+    "password": "0000"
+  },
   "researchers": [
     {
       "pin": "1234ASDF",
@@ -12,6 +10,20 @@
       "password": "0000",
       "phoneNumber": "010-0000-0000",
       "name": "김댕댕"
+    },
+    {
+      "pin": "5678QWER",
+      "organization": "연세대학교 세브란스병원",
+      "password": "1111",
+      "phoneNumber": "010-1111-1111",
+      "name": "이멍멍"
+    },
+    {
+      "pin": "9012TYUI",
+      "organization": "가톨릭대학교 서울성모병원",
+      "password": "2222",
+      "phoneNumber": "010-2222-2222",
+      "name": "박멍냥"
     }
   ]
 }

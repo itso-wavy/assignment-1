@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import RootLayout from './layout/RootLayout';
-import ProtectedLayout from './layout/ProtectedLayout';
-import Login from './pages/Login';
-import Researcher from './pages/Researcher';
+import { RootLayout, ProtectedLayout } from './layout';
+import { Login, Researcher } from './pages';
 // import './index.css';
 
 const router = createBrowserRouter([
@@ -14,17 +12,17 @@ const router = createBrowserRouter([
       { path: 'login', element: <Login /> },
       {
         element: <ProtectedLayout />, // Researcher 페이지를 포함, 다른 페이지도 보호할 수 있도록 레이아웃화
-        children: [{
-          path: 'researcher',
-          element: <Researcher />
-        }]
-      }
-    ]
-  }
-])
+        children: [
+          {
+            path: 'researcher',
+            element: <Researcher />,
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 export default function App() {
-  return (
-    <RouterProvider router={router} />
-  )
+  return <RouterProvider router={router} />;
 }
