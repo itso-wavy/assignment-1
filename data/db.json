@@ -1,0 +1,17 @@
+{
+  "admin": [
+    {
+      "id": "admin",
+      "password": "0000"
+    }
+  ],
+  "researchers": [
+    {
+      "pin": "1234ASDF",
+      "organization": "서울대학교병원",
+      "password": "0000",
+      "phoneNumber": "010-0000-0000",
+      "name": "김댕댕"
+    }
+  ]
+}
