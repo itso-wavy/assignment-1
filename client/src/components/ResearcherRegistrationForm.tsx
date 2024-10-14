@@ -3,17 +3,19 @@ import { useForm } from 'react-hook-form';
 import { addResearcher } from '../apis';
 import { AddResearcherProps } from '../types';
 
-const ResearcherRegistrationForm = ({
-  onRegistrationSuccess,
-}: {
+interface ResearcherRegistrationFormProps {
   onRegistrationSuccess: () => Promise<void>;
+}
+
+const ResearcherRegistrationForm: React.FC<ResearcherRegistrationFormProps> = ({
+  onRegistrationSuccess,
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<AddResearcherProps>({
     defaultValues: {
       name: '',
       phoneNumber: '',
@@ -38,7 +40,7 @@ const ResearcherRegistrationForm = ({
   return (
     <div>
       <p role='heading'>Researcher 등록</p>
-      <form action='' onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor='name'>이름</label>
           <input

@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import { login } from '../apis';
 import { LoginProps } from '../types';
 
-const LoginForm = ({
-  saveAuthInfo,
-}: {
+interface LoginFormProps {
   saveAuthInfo: (userId: string) => void;
-}) => {
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ saveAuthInfo }) => {
   const {
     register,
     handleSubmit,

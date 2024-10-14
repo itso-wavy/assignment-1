@@ -3,7 +3,6 @@ import {
   AddResearcherProps,
   DeleteResearcherProps,
   LoginProps,
-  Researcher,
   ResetResearchersPasswordProps,
 } from '../types';
 

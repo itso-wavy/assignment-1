@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { RootLayout, ProtectedLayout } from './layout';
 import { LoginPage, ResearcherPage } from './pages';
 import { getResearchers } from './apis';
-// import './index.css';
+import './index.css';
 
 const router = createBrowserRouter([
   {
@@ -18,12 +18,14 @@ const router = createBrowserRouter([
       {
         path: 'researcher',
         element: <ResearcherPage />,
-        loader: async () => await getResearchers(),
+        loader: async () => await getResearchers(), // 페이지 초기 로딩시 데이터 불러오기
       },
     ],
   },
 ]);
 
-export default function App() {
+const App: React.FC = () => {
   return <RouterProvider router={router} />;
-}
+};
+
+export default App;

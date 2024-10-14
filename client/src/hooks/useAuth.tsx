@@ -5,11 +5,6 @@ interface AuthState {
   userId: string | null;
 }
 
-interface AuthState {
-  isLoggedIn: 0 | 1;
-  userId: string | null;
-}
-
 export const useAuth = () => {
   const [auth, setAuth] = useState<AuthState>(() => {
     const storedAuth = localStorage.getItem('auth');

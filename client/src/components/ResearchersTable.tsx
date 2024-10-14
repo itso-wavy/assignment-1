@@ -1,14 +1,16 @@
 import { deleteResearcher, resetResearchersPassword } from '../apis';
 import { Researcher } from '../types';
 
-const ResearchersTable = ({
-  researchers,
-  onDataChange,
-}: {
+interface ResearchersTableProps {
   researchers: Researcher[];
   onDataChange: () => Promise<void>;
+}
+
+const ResearchersTable: React.FC<ResearchersTableProps> = ({
+  researchers,
+  onDataChange,
 }) => {
-  const resetHandler = async (researcher: Researcher) => {
+  const handleResetPassWord = async (researcher: Researcher) => {
     const res = await resetResearchersPassword({
       pin: researcher.pin,
       password: '0000',
@@ -19,7 +21,7 @@ const ResearchersTable = ({
     onDataChange();
   };
 
-  const deleteHandler = async (researcher: Researcher) => {
+  const handleDeleteResearcher = async (researcher: Researcher) => {
     const res = await deleteResearcher({
       pin: researcher.pin,
     });
@@ -50,10 +52,14 @@ const ResearchersTable = ({
               <td>{researcher.organization}</td>
               <td>{researcher.pin}</td>
               <td>
-                <button onClick={() => resetHandler(researcher)}>초기화</button>
+                <button onClick={() => handleResetPassWord(researcher)}>
+                  초기화
+                </button>
               </td>
               <td>
-                <button onClick={() => deleteHandler(researcher)}>삭제</button>
+                <button onClick={() => handleDeleteResearcher(researcher)}>
+                  삭제
+                </button>
               </td>
             </tr>
           ))}
