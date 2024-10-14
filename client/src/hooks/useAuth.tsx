@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+
+interface AuthState {
+  isLoggedIn: 0 | 1;
+  userId: string | null;
+}
 
 interface AuthState {
   isLoggedIn: 0 | 1;
@@ -13,16 +18,16 @@ export const useAuth = () => {
       : { isLoggedIn: 0, userId: null };
   });
 
-  useEffect(() => {
-    localStorage.setItem('auth', JSON.stringify(auth));
-  }, [auth]);
-
   const saveAuthInfo = (userId: string) => {
-    setAuth({ isLoggedIn: 1, userId });
+    const newAuth: AuthState = { isLoggedIn: 1, userId };
+    setAuth(newAuth);
+    localStorage.setItem('auth', JSON.stringify(newAuth));
   };
 
   const deleteAuthInfo = () => {
-    setAuth({ isLoggedIn: 0, userId: null });
+    const newAuth: AuthState = { isLoggedIn: 0, userId: null };
+    setAuth(newAuth);
+    localStorage.setItem('auth', JSON.stringify(newAuth));
   };
 
   return { auth, saveAuthInfo, deleteAuthInfo };

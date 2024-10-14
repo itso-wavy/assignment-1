@@ -1,19 +1,33 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+
 import { login } from '../apis';
 import { LoginProps } from '../types';
 
-const LoginForm = () => {
+const LoginForm = ({
+  saveAuthInfo,
+}: {
+  saveAuthInfo: (userId: string) => void;
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { userId: '', pw: '' } });
 
-  const onSubmit: SubmitHandler<LoginProps> = async data => {
-    // TODO:추가적인 data 밸리데이션
+  const navigate = useNavigate();
+  const onSubmit = async (loginInput: LoginProps) => {
+    // TODO: 필요시 추가적인 loginInput 밸리데이션
+    try {
+      const res = await login(loginInput);
 
-    const res = await login(data);
-    console.log('res: ', res);
+      alert(res.data.Msg);
+      saveAuthInfo(loginInput.userId);
+
+      navigate('/researcher');
+    } catch (err) {
+      alert('로그인 실패. 정보를 확인해주세요.');
+    }
   };
 
   return (
@@ -40,7 +54,7 @@ const LoginForm = () => {
             id='pw'
             {...register('pw', { required: true })}
           />
-          {errors.id && (
+          {errors.userId && (
             <p className='text-xs mt-1.5 text-red-500'>
               *pw 입력이 필요합니다.
             </p>

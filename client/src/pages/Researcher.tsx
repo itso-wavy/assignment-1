@@ -1,19 +1,42 @@
-import { Suspense } from 'react';
+import { Suspense, useState, useCallback } from 'react';
 import { Await, useLoaderData } from 'react-router-dom';
-import { getResearchers } from '../apis';
+import { AxiosResponse } from 'axios';
+
 import ResearcherRegistrationForm from '../components/ResearcherRegistrationForm';
 import ResearchersTable from '../components/ResearchersTable';
 
+import { getResearchers } from '../apis';
+
 const ResearcherPage = () => {
-  const response = useLoaderData();
+  const response = useLoaderData() as AxiosResponse<any>;
+  const [researchers, setResearchers] = useState(response.data.researcher);
+
+  const updateResearchers = useCallback(async () => {
+    try {
+      const newResponse = await getResearchers();
+
+      setResearchers(newResponse.data.researcher);
+    } catch (error) {
+      console.error('목록 업데이트에 실패했습니다.:', error);
+    }
+  }, []);
 
   return (
     <>
-      <ResearcherRegistrationForm />
+      <ResearcherRegistrationForm onRegistrationSuccess={updateResearchers} />
       <Suspense fallback={<p>로딩 중...</p>}>
-        <Await resolve={getResearchers}>
-          {<ResearchersTable researchers={response.data} />}
-        </Await>
+        <ResearchersTable
+          researchers={researchers}
+          onDataChange={updateResearchers}
+        />
+        {/*  <Await resolve={getResearchers}>
+          {
+            <ResearchersTable
+              researchers={researchers}
+              setResearchers={setResearchers}
+            />
+          }
+        </Await> */}
       </Suspense>
     </>
   );

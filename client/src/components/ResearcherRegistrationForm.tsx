@@ -1,17 +1,43 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
-const ResearcherRegistrationForm = () => {
+import { addResearcher } from '../apis';
+import { AddResearcherProps } from '../types';
+
+const ResearcherRegistrationForm = ({
+  onRegistrationSuccess,
+}: {
+  onRegistrationSuccess: () => Promise<void>;
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: '',
+      phoneNumber: '',
+      organization: '',
+    },
+  });
 
-  const onSubmit: SubmitHandler = data => console.log(data);
+  const onSubmit = async (researcherInput: AddResearcherProps) => {
+    // TODO: 필요시 추가적인 researcherInput 밸리데이션
+    try {
+      const res = await addResearcher(researcherInput);
+
+      alert(res.data.Msg);
+      onRegistrationSuccess();
+
+      reset();
+    } catch (err) {
+      alert('등록 실패. 정보를 확인해주세요.');
+    }
+  };
 
   return (
     <div>
-      <p role='heading'>Researcher 등록​</p>
+      <p role='heading'>Researcher 등록</p>
       <form action='' onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor='name'>이름</label>
@@ -27,13 +53,13 @@ const ResearcherRegistrationForm = () => {
           )}
         </div>
         <div>
-          <label htmlFor='phone'>전화번호</label>
+          <label htmlFor='phoneNumber'>전화번호</label>
           <input
             type='text'
-            id='phone'
-            {...register('phone', { required: true })}
+            id='phoneNumber'
+            {...register('phoneNumber', { required: true })}
           />
-          {errors.phone && (
+          {errors.phoneNumber && (
             <p className='text-xs mt-1.5 text-red-500'>
               *전화번호 입력이 필요합니다.
             </p>

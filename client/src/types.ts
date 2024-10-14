@@ -11,6 +11,11 @@ export interface Researcher {
   name: string;
 }
 
-export type UpdateResearcher = Partial<Researcher>;
+export type AddResearcherProps = Omit<Researcher, 'pin' | 'password'>;
 
-export type ResetPasswordProps = Pick<Researcher, 'pin' | 'password'>;
+export type ResetResearchersPasswordProps = Pick<
+  Researcher,
+  'pin' | 'password'
+>;
+
+export type DeleteResearcherProps = Pick<Researcher, 'pin'>;

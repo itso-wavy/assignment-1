@@ -1,10 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
-import { LoginProps, Researcher, ResetPasswordProps } from '../types';
+import {
+  AddResearcherProps,
+  DeleteResearcherProps,
+  LoginProps,
+  Researcher,
+  ResetResearchersPasswordProps,
+} from '../types';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
 });
 
+// 공통 에러 처리
 api.interceptors.response.use(
   response => response,
   error => {
@@ -13,29 +20,36 @@ api.interceptors.response.use(
   }
 );
 
-export const login = async ({ userId, pw }: LoginProps) => {
-  return await api.post('/login', { userId, pw });
+export const login = async ({
+  userId,
+  pw,
+}: LoginProps): Promise<AxiosResponse<any>> => {
+  const res = await api.post('/login', { userId, pw });
+  if (res.status === 200) return res;
+  else return Promise.reject(res);
 };
 
-export const logout = async (userId: string) => {
-  console.log('userId: ', userId);
+export const logout = async (userId: string): Promise<AxiosResponse<any>> => {
   return await api('/logout', { params: { userId } });
 };
 
-export const getResearchers = async () => {
+export const getResearchers = async (): Promise<AxiosResponse<any>> => {
   return await api('/researchers');
 };
 
 export const addResearcher = async (
-  researcher: Omit<Researcher, 'password'>
-): Promise<AxiosResponse<Researcher>> => {
-  return await api.post('/researcher', researcher);
+  newResearcher: AddResearcherProps
+): Promise<AxiosResponse<any>> => {
+  return await api.post('/researcher', newResearcher);
 };
 
-export const resetResearchersPassWord = async (data: ResetPasswordProps) => {
-  return await api.patch('/researcher/reset​', { data });
+export const resetResearchersPassword = async ({
+  pin,
+  password,
+}: ResetResearchersPasswordProps) => {
+  return await api.patch('/researcher/reset', { pin, password });
 };
 
-export const deleteResearcher = async ({ pin }: Pick<Researcher, 'pin'>) => {
+export const deleteResearcher = async ({ pin }: DeleteResearcherProps) => {
   return await api.delete('/researcher', { params: { pin } });
 };

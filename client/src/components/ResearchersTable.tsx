@@ -1,7 +1,34 @@
-import { useState } from 'react';
-import { deleteResearcher, resetResearchersPassWord } from '../apis';
+import { deleteResearcher, resetResearchersPassword } from '../apis';
+import { Researcher } from '../types';
 
-const ResearchersTable = ({ researchers }) => {
+const ResearchersTable = ({
+  researchers,
+  onDataChange,
+}: {
+  researchers: Researcher[];
+  onDataChange: () => Promise<void>;
+}) => {
+  const resetHandler = async (researcher: Researcher) => {
+    const res = await resetResearchersPassword({
+      pin: researcher.pin,
+      password: '0000',
+    });
+
+    alert(res.data.Msg);
+
+    onDataChange();
+  };
+
+  const deleteHandler = async (researcher: Researcher) => {
+    const res = await deleteResearcher({
+      pin: researcher.pin,
+    });
+
+    alert(res.data.Msg);
+
+    onDataChange();
+  };
+
   return (
     <div>
       <table>
@@ -23,23 +50,10 @@ const ResearchersTable = ({ researchers }) => {
               <td>{researcher.organization}</td>
               <td>{researcher.pin}</td>
               <td>
-                <button
-                  onClick={() =>
-                    resetResearchersPassWord({
-                      pin: researcher.pin,
-                      pw: researcher.password,
-                    })
-                  }
-                >
-                  초기화
-                </button>
+                <button onClick={() => resetHandler(researcher)}>초기화</button>
               </td>
               <td>
-                <button
-                  onClick={() => deleteResearcher({ pin: researcher.pin })}
-                >
-                  삭제
-                </button>
+                <button onClick={() => deleteHandler(researcher)}>삭제</button>
               </td>
             </tr>
           ))}

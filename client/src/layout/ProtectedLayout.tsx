@@ -1,11 +1,10 @@
-import { Link, Outlet, useOutletContext } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 /**
  * isLoggedIn 여부에 따라 보호된 라우트로의 라우팅 여부를 결정한다.
  */
 const ProtectedLayout = () => {
-  // const { isLoggedIn, setIsLoggedIn } = useOutletContext()
   const { auth } = useAuth();
 
   return !auth.isLoggedIn ? (
@@ -16,7 +15,6 @@ const ProtectedLayout = () => {
   ) : (
     <Outlet />
   );
-  // : <Outlet context={{ isLoggedIn, setIsLoggedIn }} />
 };
 
 export default ProtectedLayout;
