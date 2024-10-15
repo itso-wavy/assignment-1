@@ -5,7 +5,27 @@ const RootLayout: React.FC = () => {
   const location = useLocation();
 
   return (
-    <>{location.pathname === '/' && <Link to='/login'>로그인 페이지로</Link>}</>
+    <>
+      {location.pathname === '/' && (
+        <div className='hero bg-base-200 min-h-screen'>
+          <div className='hero-content flex gap-9 flex-col'>
+            <h1 className='text-5xl overflow-hidden max-w-md'>
+              <img
+                src='/public/AI_concept_w1600-800x650.jpg'
+                alt='TURINGBIO co.'
+                className='mask mask-squircle'
+              />
+            </h1>
+            <Link
+              to='/login'
+              className='btn bg-base-100 border-base-content rounded-sm'
+            >
+              로그인 하러 가기
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

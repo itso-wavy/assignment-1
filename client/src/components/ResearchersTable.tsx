@@ -33,8 +33,9 @@ const ResearchersTable: React.FC<ResearchersTableProps> = ({
 
   return (
     <div>
-      <table>
-        <thead>
+      <p role='heading'>Researcher 목록</p>
+      <table className='table overflow-x-auto table-zebra'>
+        <thead className='bg-base-300'>
           <tr>
             <th>Index</th>
             <th>Name</th>
@@ -52,12 +53,18 @@ const ResearchersTable: React.FC<ResearchersTableProps> = ({
               <td>{researcher.organization}</td>
               <td>{researcher.pin}</td>
               <td>
-                <button onClick={() => handleResetPassWord(researcher)}>
+                <button
+                  onClick={() => handleResetPassWord(researcher)}
+                  className='btn btn-primary'
+                >
                   초기화
                 </button>
               </td>
               <td>
-                <button onClick={() => handleDeleteResearcher(researcher)}>
+                <button
+                  onClick={() => handleDeleteResearcher(researcher)}
+                  className='btn btn-secondary'
+                >
                   삭제
                 </button>
               </td>

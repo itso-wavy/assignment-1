@@ -28,7 +28,7 @@ const ResearcherPage: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className='min-h-screen py-12 mx-auto max-w-7xl'>
       <ResearcherRegistrationForm onRegistrationSuccess={updateResearchers} />
       <Suspense
         fallback={
@@ -44,7 +44,7 @@ const ResearcherPage: React.FC = () => {
           onDataChange={updateResearchers}
         />
       </Suspense>
-    </>
+    </div>
   );
 };
 

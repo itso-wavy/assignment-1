@@ -31,38 +31,48 @@ const LoginForm: React.FC<LoginFormProps> = ({ saveAuthInfo }) => {
   };
 
   return (
-    <div>
-      <p role='heading'>관리자 로그인</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-2'>
         <div>
-          <label htmlFor='userId'>ID</label>
-          <input
-            type='text'
-            id='userId'
-            {...register('userId', { required: true })}
-          />
+          <div className='input input-bordered flex items-center gap-2 rounded-md'>
+            <label htmlFor='userId' className='mr-2 text-accent'>
+              ID
+            </label>
+            <input
+              type='text'
+              id='userId'
+              className='bg-primary-content'
+              {...register('userId', { required: true })}
+            />
+          </div>
           {errors.userId && (
-            <p className='text-xs mt-1.5 text-red-500'>
+            <p className='text-xs ml-0.5 mt-1.5 mb-1.5 text-red-500'>
               *id 입력이 필요합니다.
             </p>
           )}
         </div>
         <div>
-          <label htmlFor='pw'>PW</label>
-          <input
-            type='password'
-            id='pw'
-            {...register('pw', { required: true })}
-          />
+          <div className='input input-bordered flex items-center gap-2 rounded-md'>
+            <label htmlFor='pw' className='mr-1 text-accent'>
+              PW
+            </label>
+            <input
+              type='password'
+              id='pw'
+              {...register('pw', { required: true })}
+            />
+          </div>
           {errors.userId && (
-            <p className='text-xs mt-1.5 text-red-500'>
+            <p className='text-xs ml-0.5 mt-1.5 mb-1.5 text-red-500'>
               *pw 입력이 필요합니다.
             </p>
           )}
         </div>
-        <input type='submit' value='로그인' />
+        <button className='mt-2 btn bg-base-100 border-base-content rounded-sm'>
+          로그인
+        </button>
       </form>
-    </div>
+    </>
   );
 };
 
